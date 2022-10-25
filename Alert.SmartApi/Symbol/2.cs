@@ -20,7 +20,7 @@ namespace Alert.SmartApi.Symbol
         public static string CalculateDaysSpike(DateTime dt, AngelBroking.SmartApi connect)
         {
             string precDayClose = ReadPrevDayClose();
-            string data = "234";//GetLatestPrice(dt, connect);
+            string data = GetLatestPrice(dt, connect);
             //todo:            
             // 2. call api and compare
             return precDayClose + data;
@@ -49,7 +49,7 @@ namespace Alert.SmartApi.Symbol
 
         public static string GetLatestPrice(DateTime date, AngelBroking.SmartApi connect)
         {
-            date = new DateTime(2022, 25, 10, 16, 00, 34);
+            //date = new DateTime(2022, 25, 10, 16, 00, 34);
             CandleRequest cdreq = new CandleRequest();
             cdreq.exchange = Constants.EXCHANGE_NSE;
             cdreq.symboltoken = "2";
