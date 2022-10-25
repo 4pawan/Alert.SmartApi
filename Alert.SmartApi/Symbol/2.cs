@@ -23,7 +23,7 @@ namespace Alert.SmartApi.Symbol
             string data = GetLatestPrice(dt, connect);
             //todo:            
             // 2. call api and compare
-            return data;
+            return precDayClose + data;
         }
         public static string ReadPrevDayClose()
         {
@@ -35,7 +35,7 @@ namespace Alert.SmartApi.Symbol
             //todo: call api
             //var data = new QueueData { Code = 2, PrevDayClose = 17512 };
             //QueueUtil.SendMesage(val.Body);
-            return content + " : " + data.Code;
+            return content;
         }
 
 
@@ -53,7 +53,7 @@ namespace Alert.SmartApi.Symbol
             CandleDataResponse cd = obj.GetCandleDataResponse;
 
             if (cd == null)
-                return null;
+                return "33--";
 
             if (cd.data == null)
                 return cd.status ? Message.SucessNoData : string.Format(Message.ErrorNoData, cd.message);
