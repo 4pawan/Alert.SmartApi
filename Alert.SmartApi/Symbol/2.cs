@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using AngelBroking;
+using Azure;
 using Azure.Storage.Queues.Models;
 using Newtonsoft.Json;
 using System;
@@ -11,17 +12,18 @@ namespace Alert.SmartApi.Symbol
 {
     public class _2
     {
-        public static void ReportUnusualChanges(DateTime dt)
+        public static void ReportUnusualChanges(DateTime dt, AngelBroking.SmartApi connect)
         {
-            var spike = CalculateDaysSpike(dt);
+            var spike = CalculateDaysSpike(dt, connect);
             NotifyUser.sendMessage(spike);
         }
-        public static string CalculateDaysSpike(DateTime dt)
+        public static string CalculateDaysSpike(DateTime dt, AngelBroking.SmartApi connect)
         {
             string precDayClose = ReadPrevDayClose();
+            string data = GetLatestPrice(dt, connect);
             //todo:            
             // 2. call api and compare
-            return precDayClose;
+            return data;
         }
         public static string ReadPrevDayClose()
         {
@@ -34,6 +36,34 @@ namespace Alert.SmartApi.Symbol
             //var data = new QueueData { Code = 2, PrevDayClose = 17512 };
             //QueueUtil.SendMesage(val.Body);
             return content + " : " + data.Code;
+        }
+
+
+        public static string GetLatestPrice(DateTime date, AngelBroking.SmartApi connect)
+        {
+            CandleRequest cdreq = new CandleRequest();
+            cdreq.exchange = Constants.EXCHANGE_NSE;
+            cdreq.symboltoken = "2";
+            cdreq.interval = Constants.INTERVAL_FIVE_MINUTE;
+            DateTime dt = date.AddMinutes(-1);
+            cdreq.fromdate = dt.AddMinutes(-5).ToString(Configuration.dateFormat); //2022-08-16 11:45
+            cdreq.todate = dt.ToString(Configuration.dateFormat);  // 2022-08-16 12:15
+
+            var obj = connect.GetCandleData(cdreq);
+            CandleDataResponse cd = obj.GetCandleDataResponse;
+
+            if (cd == null)
+                return null;
+
+            if (cd.data == null)
+                return cd.status ? Message.SucessNoData : string.Format(Message.ErrorNoData, cd.message);
+
+            var data = cd.data.FirstOrDefault();
+            if (cd.status && data != null)
+            {
+                return $"close: {data[5]}"; ;
+            }
+            return "null";
         }
     }
 }

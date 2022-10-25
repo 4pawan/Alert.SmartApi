@@ -12,7 +12,11 @@ namespace Alert.SmartApi
         public void Run([TimerTrigger("0 1/5 4-10 * * 1-5")] TimerInfo myTimer, ILogger log)
         {
             DateTime dt = DateTime.UtcNow.ToIstDateTime();
-            _2.ReportUnusualChanges(dt);
+            var connect = new AngelBroking.SmartApi(Constant.api_key, "", "");
+            connect.GenerateSession(Constant.client_code, Constant.password, connect.GetTotp());
+            connect.GenerateToken();
+
+            _2.ReportUnusualChanges(dt, connect);
         }
     }
 }
