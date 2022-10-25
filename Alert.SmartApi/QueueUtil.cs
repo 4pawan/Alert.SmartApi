@@ -4,6 +4,7 @@ using Azure.Storage.Queues.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Alert.SmartApi
 {
@@ -11,19 +12,32 @@ namespace Alert.SmartApi
     {
         static string queueName = "myqueue";
         static string storageConnString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+        static QueueClient client = new QueueClient(storageConnString, queueName);
 
         public static void SendMesage(QueueData data)
         {
-            QueueClient client = new QueueClient(storageConnString, queueName);
             string message = JsonConvert.SerializeObject(data);
             client.SendMessage(message);
         }
 
-        public static Response<QueueMessage> ReadMesage()
+        public static QueueData ReadMesage()
         {
-            QueueClient client = new QueueClient(storageConnString, queueName);
-            // Send a message to our queue
-            return client.ReceiveMessage();
+            try
+            {
+                Response<QueueMessage> msg = client.ReceiveMessage();
+                var content = Encoding.ASCII.GetString(msg.Value.Body);
+                QueueData data = JsonConvert.DeserializeObject<QueueData>(content);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static void ClearMessages()
+        {
+            client.ClearMessages();
         }
 
     }

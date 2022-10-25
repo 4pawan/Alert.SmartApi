@@ -29,14 +29,18 @@ namespace Alert.SmartApi.Symbol
         {
             try
             {
-                Response<QueueMessage> msg = QueueUtil.ReadMesage();
-                QueueMessage val = msg.Value;
-                var content = Encoding.ASCII.GetString(val.Body);
-                QueueData data = JsonConvert.DeserializeObject<QueueData>(content);
-                //todo: call api
-                //var data = new QueueData { Code = 2, PrevDayClose = 17512 };
-                //QueueUtil.SendMesage(val.Body);
-                return content;
+                QueueData data = QueueUtil.ReadMesage();
+                var _330pmInUtc = new TimeSpan(10, 0, 0);
+                TimeSpan now = DateTime.UtcNow.TimeOfDay;
+
+                if (now > _330pmInUtc)
+                {
+                    var todaysClose = new QueueData { Code = 2, PrevDayClose = 17515 };
+                    QueueUtil.ClearMessages();
+                    QueueUtil.SendMesage(todaysClose);
+                }
+
+                return data.Code.ToString();
 
             }
             catch (Exception ex)
