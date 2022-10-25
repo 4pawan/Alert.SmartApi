@@ -14,16 +14,16 @@ namespace Alert.SmartApi
 
         public static void SendMesage(QueueData data)
         {
-            QueueClient queue = new QueueClient(storageConnString, queueName);
+            QueueClient client = new QueueClient(storageConnString, queueName);
             string message = JsonConvert.SerializeObject(data);
-            queue.SendMessage(message);
+            client.SendMessage(message);
         }
 
         public static Response<QueueMessage> ReadMesage()
         {
-            QueueClient queue = new QueueClient(storageConnString, queueName);
+            QueueClient client = new QueueClient(storageConnString, queueName);
             // Send a message to our queue
-            return queue.ReceiveMessage();
+            return client.ReceiveMessage();
         }
 
     }
