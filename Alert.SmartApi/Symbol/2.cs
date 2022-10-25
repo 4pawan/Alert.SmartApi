@@ -20,27 +20,36 @@ namespace Alert.SmartApi.Symbol
         public static string CalculateDaysSpike(DateTime dt, AngelBroking.SmartApi connect)
         {
             string precDayClose = ReadPrevDayClose();
-            string data = GetLatestPrice(dt, connect);
+            string data = "234";//GetLatestPrice(dt, connect);
             //todo:            
             // 2. call api and compare
             return precDayClose + data;
         }
         public static string ReadPrevDayClose()
         {
-            Response<QueueMessage> msg = QueueUtil.ReadMesage();
-            QueueMessage val = msg.Value;
-            var content = Encoding.ASCII.GetString(val.Body);
-            QueueData data = JsonConvert.DeserializeObject<QueueData>(content);
+            try
+            {
+                Response<QueueMessage> msg = QueueUtil.ReadMesage();
+                QueueMessage val = msg.Value;
+                var content = Encoding.ASCII.GetString(val.Body);
+                QueueData data = JsonConvert.DeserializeObject<QueueData>(content);
+                //todo: call api
+                //var data = new QueueData { Code = 2, PrevDayClose = 17512 };
+                //QueueUtil.SendMesage(val.Body);
+                return content;
 
-            //todo: call api
-            //var data = new QueueData { Code = 2, PrevDayClose = 17512 };
-            //QueueUtil.SendMesage(val.Body);
-            return content;
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
         }
 
 
         public static string GetLatestPrice(DateTime date, AngelBroking.SmartApi connect)
         {
+            date = new DateTime(2022, 25, 10, 16, 00, 34);
             CandleRequest cdreq = new CandleRequest();
             cdreq.exchange = Constants.EXCHANGE_NSE;
             cdreq.symboltoken = "2";
