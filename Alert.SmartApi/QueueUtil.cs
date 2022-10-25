@@ -1,36 +1,29 @@
-﻿using Azure.Storage.Queues;
+﻿using Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
 namespace Alert.SmartApi
 {
-
-    public class QueueData
-    {
-        public int Code { get; set; }
-        public double PrevDayClose { get; set; }
-    }
-
-
     public class QueueUtil
     {
-        string connectionString = "<connection_string>";
         static string queueName = "myqueue";
+        static string storageConnString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
 
-        public static void SendMesage()
+        public static void SendMesage(QueueData data)
         {
-            string storageConnString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
             QueueClient queue = new QueueClient(storageConnString, queueName);
-            string message = JsonConvert.SerializeObject(new QueueData { Code = 2, PrevDayClose = 2345 });
+            string message = JsonConvert.SerializeObject(data);
             queue.SendMessage(message);
         }
 
-        public void ReadMesage()
+        public static Response<QueueMessage> ReadMesage()
         {
-            QueueClient queue = new QueueClient(connectionString, queueName);
+            QueueClient queue = new QueueClient(storageConnString, queueName);
             // Send a message to our queue
-            var message = queue.ReceiveMessage();
+            return queue.ReceiveMessage();
         }
 
     }
