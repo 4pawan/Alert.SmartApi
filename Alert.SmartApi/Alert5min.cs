@@ -11,8 +11,8 @@ namespace Alert.SmartApi
         [FunctionName("Alert5min")]
         public void Run([TimerTrigger("0 1/5 4-10 * * 1-5")] TimerInfo myTimer, ILogger log)
         {
-            DateTime dt = DateTime.Now.ToIstDateTime();
-             _2.ReportUnusualChanges(dt);
+            DateTime dt = DateTime.UtcNow.ToIstDateTime();
+            _2.ReportUnusualChanges(dt);
         }
     }
 }
