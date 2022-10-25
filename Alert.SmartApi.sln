@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alert.SmartApi", "Alert.SmartApi\Alert.SmartApi.csproj", "{EE4A796A-311A-48AA-A308-F989A40B9431}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE4A796A-311A-48AA-A308-F989A40B9431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4A796A-311A-48AA-A308-F989A40B9431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4A796A-311A-48AA-A308-F989A40B9431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4A796A-311A-48AA-A308-F989A40B9431}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76DA9684-D4DE-40BE-8A76-518A0B69FA99}
+	EndGlobalSection
+EndGlobal
