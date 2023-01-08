@@ -10,6 +10,7 @@ namespace Alert.SmartApi
     {
         public const string client_code = "XXXXX"; //YOUR CLIENT CODE
         public const string password = "XXXXX"; // YOUR PASSWORD
+        public const string pin = "XXXXX"; // YOUR pin
         public const string api_key = "XXXXXX";
         public const string totp_key = "XXXXXXXXXXXXXX";
 

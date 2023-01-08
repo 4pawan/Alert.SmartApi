@@ -19,7 +19,7 @@ namespace Alert.SmartApi
             DateTime utcdate = DateTime.UtcNow;
             var istdate = utcdate.ToIstDateTime();
             var connect = new AngelBroking.SmartApi(Constant.api_key, JWTToken, RefreshToken);
-            connect.GenerateSession(Constant.client_code, Constant.password, connect.GetTotp());
+            connect.GenerateSession(Constant.client_code, Constant.pin, connect.GetTotp());
             connect.GenerateToken();
             var nxtGetNextOccurrence = myTimer.Schedule.GetNextOccurrence(utcdate);
             string msg = $"nxt:{nxtGetNextOccurrence.ToString(Configuration.dateFormat)}.." +
