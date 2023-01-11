@@ -3,6 +3,7 @@ using AngelBroking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Alert.SmartApi.Symbol
 {
@@ -20,6 +21,10 @@ namespace Alert.SmartApi.Symbol
             DateTime dt = date.AddMinutes(-1);
             cdreq.fromdate = dt.AddMinutes(-30).ToString(Configuration.dateFormat); //2022-08-16 11:45
             cdreq.todate = dt.ToString(Configuration.dateFormat);  // 2022-08-16 12:15
+            var builder = new StringBuilder();
+            builder.Append($" fromDate{cdreq.fromdate}");
+            builder.Append($"toDate{cdreq.todate}");
+            string noData = Message.SucessNoData + builder;
 
             var obj = connect.GetCandleData(cdreq);
             CandleDataResponse cd = obj.GetCandleDataResponse;
@@ -28,7 +33,7 @@ namespace Alert.SmartApi.Symbol
                 return null;
 
             if (cd.data == null)
-                return cd.status ? Message.SucessNoData : string.Format(Message.ErrorNoData, cd.message);
+                return cd.status ? noData : string.Format(Message.ErrorNoData, cd.message);
 
             var data = cd.data.FirstOrDefault();
             if (cd.status && data != null)
