@@ -92,5 +92,29 @@ namespace Alert.SmartApi.Symbol
 
             return Message.Normal;
         }
+
+        private float GetYesterdayClose(AngelBroking.SmartApi connect, DateTime date)
+        {
+            CandleRequest cdreq = new CandleRequest();
+            cdreq.exchange = Constants.EXCHANGE_NSE;
+            cdreq.symboltoken = "467";
+            cdreq.interval = Constants.INTERVAL_ONE_DAY;
+            cdreq.fromdate = date.AddDays(-1).ToString(Configuration.dateFormat);
+            cdreq.todate = date.ToString(Configuration.dateFormat);
+            var obj = connect.GetCandleData(cdreq);
+            CandleDataResponse cd = obj.GetCandleDataResponse;
+            float yclose = 0;
+            if (cd != null && cd.data != null)
+            {
+                var data = cd.data.FirstOrDefault();
+                if (cd.status && data != null)
+                {
+                    yclose = float.Parse(data[4].ToString());
+                }
+            }
+
+            return yclose;
+        }
+
     }
 }
