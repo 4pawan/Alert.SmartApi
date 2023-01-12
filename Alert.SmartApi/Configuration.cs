@@ -8,7 +8,7 @@ namespace Alert.SmartApi
 {
     public class Configuration
     {
-        public const string dateFormat = "yyyy-MM-dd hh:mm";
+        public const string dateFormat = "yyyy-MM-dd HH:mm";
         public const string timeFormat = "hh:mm tt";
     }
 
