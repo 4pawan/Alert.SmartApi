@@ -8,7 +8,7 @@ namespace Alert.SmartApi
     public class AlertFunction
     {
         [FunctionName("Function1")]
-        public void Run([TimerTrigger("0 16/30 4-10 * * 1-5")] TimerInfo myTimer, ILogger log)
+        public void Run([TimerTrigger("0 16/15 4-10 * * 1-5")] TimerInfo myTimer, ILogger log)
         {
             // 0 16/30 4-10 * * 1-5                                   
            
