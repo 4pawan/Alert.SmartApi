@@ -101,8 +101,8 @@ namespace Alert.SmartApi.Symbol
             cdreq.exchange = Constants.EXCHANGE_NSE;
             cdreq.symboltoken = "467";
             cdreq.interval = Constants.INTERVAL_ONE_DAY;
-            cdreq.fromdate = date.AddDays(-1).ToString(Configuration.dateFormat);
-            cdreq.todate = date.ToString(Configuration.dateFormat);
+            cdreq.fromdate = date.AddDays(-2).ToString(Configuration.dateFormat);
+            cdreq.todate = date.AddDays(-1).ToString(Configuration.dateFormat);
             var obj = connect.GetCandleData(cdreq);
             CandleDataResponse cd = obj.GetCandleDataResponse;
             double yclose = 0;
