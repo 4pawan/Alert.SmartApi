@@ -18,7 +18,7 @@ namespace Alert.SmartApi.Symbol
             cdreq.exchange = Constants.EXCHANGE_NSE;
             cdreq.symboltoken = "467";
             cdreq.interval = Constants.INTERVAL_THIRTY_MINUTE;
-            DateTime dt = date.AddMinutes(-1);
+            DateTime dt = date;
             cdreq.fromdate = dt.AddMinutes(-30).ToString(Configuration.dateFormat); //2022-08-16 11:45
             cdreq.todate = dt.ToString(Configuration.dateFormat);  // 2022-08-16 12:15
             var builder = new StringBuilder();
