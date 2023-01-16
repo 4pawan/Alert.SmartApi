@@ -106,12 +106,22 @@ namespace Alert.SmartApi.Symbol
             var obj = connect.GetCandleData(cdreq);
             CandleDataResponse cd = obj.GetCandleDataResponse;
             double yclose = 0;
-            if (cd != null && cd.data != null)
+            if (cd == null) return yclose;
+
+            if (cd.status && cd.data != null)
             {
                 var data = cd.data.FirstOrDefault();
-                if (cd.status && data != null)
+                if (data != null)
                 {
                     yclose = (double)data[4];
+                }
+            }
+            else
+            {
+                var queueData = QueueUtil.ReadMesage();
+                if (queueData?.Code == 467)
+                {
+                    yclose = queueData.PrevDayClose;
                 }
             }
 
