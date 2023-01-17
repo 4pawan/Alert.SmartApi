@@ -46,7 +46,7 @@ namespace Alert.SmartApi.Symbol
                     var change = Math.Round((double)data[4] - yclose, 2);
                     string volume = ((long)data[5]) > VolumeThreshold ? $"<b>{data[5]}</b>" : $"{data[5]}";
                     string summary = unusualChanges != Message.Normal ? $"<b>{unusualChanges}</b> ," : "";
-                    string message = $"{summary} change: {change},Open: {data[1]}, high:{data[2]},low: {data[3]},close: {data[4]}," +
+                    string message = $"{summary} change: {change} ,close: {data[4]}," +
                         $"volume: {volume}";
                     return message;
                 }
